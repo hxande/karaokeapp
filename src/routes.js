@@ -14,6 +14,13 @@ const MyDrawerNavigator = createDrawerNavigator({
     Another: {
         screen: Another
     }
+},
+{
+    defaultNavigationOptions: {
+        headerTitle: 'InstaRocket',
+        headerTintColor: '#000'
+    },
+    mode: 'modal'
 });
 
 const Routes = createAppContainer(MyDrawerNavigator);

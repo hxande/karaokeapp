@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TextInput, FlatList } from 'react-native';
+import { View, Text, TextInput, FlatList, StyleSheet, Image } from 'react-native';
 import data from '../../data.json';
 
 export default class Musicas extends Component {
@@ -42,23 +42,34 @@ export default class Musicas extends Component {
 
   render() {
     return (
-      <View>
-        <TextInput
-          placeholder='Buscar'
-          onChangeText={text => this.searchFilter(text)}
-          value={this.state.text}
-          underlineColorAndroid="transparent"
-        />
-        <View>
+      <View style={styles.container}>
+        <View style={styles.searchContainer}>
+          <TextInput
+            style={styles.searchField}
+            placeholder='Buscar'
+            onChangeText={text => this.searchFilter(text)}
+            value={this.state.text}
+            underlineColorAndroid="transparent"
+          />
+        </View>
+        <View style={styles.musicsContainer}>
           <FlatList
             data={this.state.musics}
             renderItem={({ item }) => (
-              <View>
-                <Text>{item.code}</Text>
-                <Text>{item.artist}</Text>
-                <Text>{item.song}</Text>
-                <Text>{item.lyrics}</Text>
-                <Text>{item.language}</Text>
+              <View style={styles.musicCardContainer}>
+                <View style={styles.infosContainer}>
+                  <Text style={styles.textCode}>#{item.code}</Text>
+                  <Text style={styles.textArtist}>{item.artist}</Text>
+                  <Text style={styles.textSong}>{item.song}</Text>
+                  <Text style={{marginLeft: 5}}>{item.lyrics}</Text>
+                  <Text style={{marginLeft: 5}}>{item.language}</Text>
+                </View>
+                <View style={styles.avatarContainer}>
+                  <Image
+                    style={styles.musicAvatar}
+                    source={{uri: 'https://api.adorable.io/avatars/285/abott@adorable.png'}}
+                  />
+                </View>
               </View>
             )}
             enableEmptySections={true}
@@ -69,3 +80,57 @@ export default class Musicas extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  searchContainer: {
+    marginTop: 50,
+    marginHorizontal: 5,
+    height: 25
+  },
+  searchField: {
+    fontSize: 20
+  },
+  musicsContainer: {
+    marginTop: 10,
+    marginBottom: 10,
+    borderWidth: 0.5
+  },
+  musicCardContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: 5,
+    borderWidth: 0.3,
+    borderRadius: 5
+  },
+  infosContainer: {
+    flex: 2,
+  },
+  textCode: {
+    marginLeft: 5,
+    color: '#00008b'
+  },
+  textArtist: {
+    marginLeft: 5,
+    color: '#191970',
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
+  textSong: {
+    marginLeft: 5,
+    color: '#696969',
+    fontSize: 12,
+    fontWeight: 'bold'
+  },
+  avatarContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  musicAvatar: {
+    height: 80,
+    width: 80
+  }
+});
